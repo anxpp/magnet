@@ -16,7 +16,7 @@ public class NetUtils {
             //获取输入流
             InputStream is = conn.getInputStream();
             //通过StreamTool解析输入流得到byte[]数组
-            byte[] data = StreamTool.read(is);
+            byte[] data = StreamUtil.read(is);
             //返回解析后的脚本代码
             return new String(data);
         }
@@ -24,7 +24,7 @@ public class NetUtils {
     }
 }
 
-class StreamTool {
+class StreamUtil {
     public static byte[] read(InputStream is) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] b = new byte[1024];

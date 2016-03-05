@@ -35,8 +35,6 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
     private int page = 1;
     private MyListViewAdapter myListViewAdapter;
     private ProgressDialog progressDialog;
-    private ExecuteHtml executeHtml;
-    private String AsynResult = "";
     private ClipboardManager clipboardmanager;
 
     @Override
@@ -55,7 +53,7 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
 
         init();
         listView.setOnScrollListener(this);
-        executeHtml=new ExecuteHtml();
+        ExecuteHtml executeHtml = new ExecuteHtml();
         executeHtml.execute();
         myListViewAdapter=new MyListViewAdapter(BreadActivity.this,beanList);
         listView.setAdapter(myListViewAdapter);
@@ -92,7 +90,7 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
         @Override
         protected String doInBackground(String... params) {
             try {
-                String html = null;
+                String html;
                 html = NetUtils.getHtml("http://www.breadsearch.com/search/" + searchKey + "/" + page);
                 return html;
             } catch (Exception e) {
@@ -115,7 +113,6 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
-            AsynResult = s;
             Log.d("CONTENT", s);
             getData(s);
             myListViewAdapter.notifyDataSetChanged();
@@ -135,21 +132,21 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
                 int size = document.select("span.list-title>a").size();
                 Log.d(TAG, "size is "+size);
                 if (size <= 0) {
-                    TextView nomessage = new TextView(BreadActivity.this);
-                    nomessage.setText("已经到达底部");
-                    nomessage.setTextSize(30);
-                    nomessage.setGravity(Gravity.CENTER);
+                    TextView noMessage = new TextView(BreadActivity.this);
+                    noMessage.setText("已经到达底部");
+                    noMessage.setTextSize(30);
+                    noMessage.setGravity(Gravity.CENTER);
                     Toast.makeText(BreadActivity.this, "没有更多内容", Toast.LENGTH_SHORT).show();
-                    listView.addFooterView(nomessage, null, false);
+                    listView.addFooterView(noMessage, null, false);
                 }
                 for (int i = 0; i < document.select("span.list-title>a").size(); i++) {
                     MessageBean bean = new MessageBean();
                     String title = document.select("span.list-title>a").get(i).text();
-                    String magnetlink = document.select("span.list-label>a").get(i).attr("href");
+                    String magnetLink = document.select("span.list-label>a").get(i).attr("href");
                     bean.setTitle(title);
-                    bean.setMagnetLink(magnetlink);
+                    bean.setMagnetLink(magnetLink);
                     beanList.add(bean);
-                    Log.d(TAG, "Title=" + title + "  Magnet=" + magnetlink);
+                    Log.d(TAG, "Title=" + title + "  Magnet=" + magnetLink);
                 }
             } catch (Exception e) {
                 Toast.makeText(BreadActivity.this, "超时", Toast.LENGTH_SHORT).show();

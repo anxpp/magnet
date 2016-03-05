@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Class jumpClass=BtDiggActivity.class;
+                Class jumpClass=SsbcActivity.class;
                 if (searchEt.getText().length() <= 0) {
                     Toast.makeText(MainActivity.this, "请输入关键字", Toast.LENGTH_SHORT).show();
                 } else {
                     switch (selectedRadio.getText().toString())
                     {
-                        case "btdigg":jumpClass=BtDiggActivity.class;break;
+                        case "btdigg":jumpClass=SsbcActivity.class;break;
                         case "bread" :jumpClass=BreadActivity.class ;break;
                     }
                     Intent intent = new Intent(MainActivity.this, jumpClass);
