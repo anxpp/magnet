@@ -24,16 +24,18 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     private MyListViewAdapter myListViewAdapter;
     private ListView listView;
     private List<MessageBean> beanList;
+    private String addr="";
     private String searchKey="";
 
     public HtmlMatching(Context context,ProgressDialog progressDialog,MyListViewAdapter myListViewAdapter,ListView listView,
-                        List<MessageBean> beanList,String searchKey){
+                        List<MessageBean> beanList,String addr,String searchKey){
         this.context = context;
         this.progressDialog = progressDialog;
         this.myListViewAdapter = myListViewAdapter;
         this.listView = listView;
         this.beanList = beanList;
         this.searchKey = searchKey;
+        this.addr = addr;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     protected String doInBackground(String... params) {
         try {
             String html;
-            html = NetUtils.getHtml("http://www.shousibaocai.cc/search/" + java.net.URLEncoder.encode(searchKey,"UTF-8"));
+            html = NetUtils.getHtml(addr + java.net.URLEncoder.encode(searchKey,"UTF-8"));
             return html;
         } catch (Exception e) {
             e.printStackTrace();

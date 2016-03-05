@@ -27,11 +27,6 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
         searchKey = this.getIntent().getStringExtra("search_key");
         searchKey = searchKey.replace(" ", "+");
         init();
-        listView.setOnScrollListener(this);
-        myListViewAdapter=new MyListViewAdapter(SsbcActivity.this,beanList);
-
-        new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList, searchKey).execute();
-        listView.setAdapter(myListViewAdapter);
     }
 
     private void init() {
@@ -40,6 +35,11 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
         progressDialog=new ProgressDialog(SsbcActivity.this);
         progressDialog.setMessage("加载中...");
         progressDialog.setCancelable(false);
+        listView.setOnScrollListener(this);
+        myListViewAdapter=new MyListViewAdapter(SsbcActivity.this,beanList);
+
+        new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,"http://www.shousibaocai.cc/search/",searchKey).execute();
+        listView.setAdapter(myListViewAdapter);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
         if (scrollState==AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
             if (view.getLastVisiblePosition()==(view.getCount()-1)){
                 if (listView.getFooterViewsCount()!=1){
-                    new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,searchKey).execute();
+                    new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,"http://www.shousibaocai.cc/search/",searchKey).execute();
                 }
             }
         }
