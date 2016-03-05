@@ -5,9 +5,6 @@
     android:layout_margin="8dp">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:text="TITLE"
-        android:textSize="22sp"
+        android:layout_height="wrap_content"
         android:id="@+id/title_tv"/>
-
 </LinearLayout>

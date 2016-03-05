@@ -26,9 +26,10 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     private List<MessageBean> beanList;
     private String addr="";
     private String searchKey="";
+    private MatchingListener matchingListener;
 
     public HtmlMatching(Context context,ProgressDialog progressDialog,MyListViewAdapter myListViewAdapter,ListView listView,
-                        List<MessageBean> beanList,String addr,String searchKey){
+                        List<MessageBean> beanList,String addr,String searchKey,MatchingListener matchingListener){
         this.context = context;
         this.progressDialog = progressDialog;
         this.myListViewAdapter = myListViewAdapter;
@@ -36,6 +37,7 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
         this.beanList = beanList;
         this.searchKey = searchKey;
         this.addr = addr;
+        this.matchingListener = matchingListener;
     }
 
     @Override
@@ -89,8 +91,8 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
             for (int i=0;i<document.select("div.search-item>div.item-title>h3>a").size();i++)
             {
                 MessageBean bean=new MessageBean();
-                String title=document.select("div.search-item>div.item-title>h3>a").get(i).attr("title");//title
-                String magnetLink=document.select("div.search-item>div.item-title>h3>a").get(i).attr("href");//magnetLink
+                String title = matchingListener.getTitle(document,i);
+                String magnetLink = matchingListener.getLink(document,i);
 
                 bean.setTitle(title);
                 bean.setMagnetLink("magnet:?xt=urn:btih:" + magnetLink.substring(4,magnetLink.length()));
@@ -100,5 +102,9 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
         catch (Exception e){
             Toast.makeText(context, "网络超时，请更换搜索源", Toast.LENGTH_SHORT).show();
         }
+    }
+    public interface MatchingListener{
+        String getTitle(Document document,int i);
+        String getLink(Document document,int i);
     }
 }

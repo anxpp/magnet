@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anxpp.magnet.Beans.MessageBean;
+import com.anxpp.magnet.Utils.HtmlMatching;
 import com.anxpp.magnet.Utils.MyListViewAdapter;
 import com.anxpp.magnet.Utils.NetUtils;
 
@@ -36,6 +37,7 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
     private MyListViewAdapter myListViewAdapter;
     private ProgressDialog progressDialog;
     private ClipboardManager clipboardmanager;
+    private HtmlMatching.MatchingListener matchingListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,17 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
     }
 
     private void init() {
+        matchingListener = new HtmlMatching.MatchingListener() {
+            @Override
+            public String getTitle(Document document, int i) {
+                return null;
+            }
+
+            @Override
+            public String getLink(Document document, int i) {
+                return null;
+            }
+        };
         listView = (ListView) findViewById(R.id.bread_listview);
         beanList = new ArrayList<>();
         progressDialog=new ProgressDialog(BreadActivity.this);

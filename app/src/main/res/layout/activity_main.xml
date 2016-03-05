@@ -18,7 +18,48 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_search">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_search"
+                android:id="@+id/search_et"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_search"
+                android:id="@+id/search_btn"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_search"
+            android:orientation="horizontal"
+            android:id="@+id/btGroup">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_btn_ssbc"
+                android:id="@+id/bt1"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_btn_bread"
+                android:id="@+id/bt2"/>
+        </RadioGroup>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

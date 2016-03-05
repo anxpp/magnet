@@ -10,6 +10,8 @@ import com.anxpp.magnet.Beans.MessageBean;
 import com.anxpp.magnet.Utils.HtmlMatching;
 import com.anxpp.magnet.Utils.MyListViewAdapter;
 
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,12 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
     private MyListViewAdapter myListViewAdapter;
     private ProgressDialog progressDialog;
     private String searchKey;
+    private HtmlMatching.MatchingListener matchingListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bt_digg);
+        setContentView(R.layout.activity_ssbc);
         searchKey = this.getIntent().getStringExtra("search_key");
         searchKey = searchKey.replace(" ", "+");
         init();
@@ -38,7 +41,20 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
         listView.setOnScrollListener(this);
         myListViewAdapter=new MyListViewAdapter(SsbcActivity.this,beanList);
 
-        new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,"http://www.shousibaocai.cc/search/",searchKey).execute();
+        matchingListener = new HtmlMatching.MatchingListener() {
+            @Override
+            public String getTitle(Document document, int i) {
+                return document.select("div.search-item>div.item-title>h3>a").get(i).attr("title");
+            }
+
+            @Override
+            public String getLink(Document document, int i) {
+                return document.select("div.search-item>div.item-title>h3>a").get(i).attr("href");
+            }
+        };
+
+        new HtmlMatching(this, progressDialog, myListViewAdapter, listView, beanList,
+                "http://www.shousibaocai.cc/search/", searchKey,matchingListener).execute();
         listView.setAdapter(myListViewAdapter);
     }
 
@@ -47,7 +63,8 @@ public class SsbcActivity extends AppCompatActivity implements ListView.OnScroll
         if (scrollState==AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
             if (view.getLastVisiblePosition()==(view.getCount()-1)){
                 if (listView.getFooterViewsCount()!=1){
-                    new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,"http://www.shousibaocai.cc/search/",searchKey).execute();
+                    new HtmlMatching(this,progressDialog,myListViewAdapter,listView,beanList,
+                            "http://www.shousibaocai.cc/search/",searchKey,matchingListener).execute();
                 }
             }
         }
