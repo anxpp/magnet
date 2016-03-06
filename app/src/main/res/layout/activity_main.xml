@@ -53,12 +53,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_btn_ssbc"
-                android:id="@+id/bt1"/>
+                android:id="@+id/radio_btn_ssbc"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_btn_bread"
-                android:id="@+id/bt2"/>
+                android:id="@+id/radio_btn_bread"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_btn_btIsland"
+                android:id="@+id/radio_btn_btIsland"/>
         </RadioGroup>
     </RelativeLayout>
 

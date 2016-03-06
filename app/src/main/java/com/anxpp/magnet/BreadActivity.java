@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anxpp.magnet.Beans.MessageBean;
+import com.anxpp.magnet.Beans.Item;
 import com.anxpp.magnet.Utils.HtmlMatching;
 import com.anxpp.magnet.Utils.MyListViewAdapter;
 import com.anxpp.magnet.Utils.NetUtils;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class BreadActivity extends AppCompatActivity implements ListView.OnScrollListener {
     private ListView listView;
-    private List<MessageBean> beanList;
+    private List<Item> beanList;
     private String searchKey = "";
     private int page = 1;
     private MyListViewAdapter myListViewAdapter;
@@ -62,17 +62,17 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
     }
 
     private void init() {
-        matchingListener = new HtmlMatching.MatchingListener() {
-            @Override
-            public String getTitle(Document document, int i) {
-                return null;
-            }
-
-            @Override
-            public String getLink(Document document, int i) {
-                return null;
-            }
-        };
+//        matchingListener = new HtmlMatching.MatchingListener() {
+//            @Override
+//            public String getTitle(Document document, int i) {
+//                return null;
+//            }
+//
+//            @Override
+//            public String getLink(Document document, int i) {
+//                return null;
+//            }
+//        };
         listView = (ListView) findViewById(R.id.bread_listview);
         beanList = new ArrayList<>();
         progressDialog=new ProgressDialog(BreadActivity.this);
@@ -132,7 +132,7 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    clipboardmanager.setPrimaryClip(ClipData.newPlainText(null, beanList.get(i).getMagnetLink()));
+                    clipboardmanager.setPrimaryClip(ClipData.newPlainText(null, beanList.get(i).getLink()));
                     Toast.makeText(BreadActivity.this, "磁力链已复制到剪贴板☃", Toast.LENGTH_LONG).show();
                 }
             });
@@ -153,11 +153,11 @@ public class BreadActivity extends AppCompatActivity implements ListView.OnScrol
                     listView.addFooterView(noMessage, null, false);
                 }
                 for (int i = 0; i < document.select("span.list-title>a").size(); i++) {
-                    MessageBean bean = new MessageBean();
+                    Item bean = new Item();
                     String title = document.select("span.list-title>a").get(i).text();
                     String magnetLink = document.select("span.list-label>a").get(i).attr("href");
                     bean.setTitle(title);
-                    bean.setMagnetLink(magnetLink);
+                    bean.setLink(magnetLink);
                     beanList.add(bean);
                     Log.d(TAG, "Title=" + title + "  Magnet=" + magnetLink);
                 }

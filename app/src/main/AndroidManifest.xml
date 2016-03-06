@@ -24,6 +24,8 @@
         </activity>
         <activity android:name="com.anxpp.magnet.BreadActivity" >
         </activity>
+        <activity android:name="com.anxpp.magnet.ResultActivity" >
+        </activity>
     </application>
 
 </manifest>

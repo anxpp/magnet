@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.anxpp.magnet.Beans.MessageBean;
+import com.anxpp.magnet.Beans.Item;
 import com.anxpp.magnet.R;
 
 import java.util.List;
@@ -16,8 +16,8 @@ import java.util.List;
 public class MyListViewAdapter extends BaseAdapter {
     Context context;
     LayoutInflater mInflater;
-    List<MessageBean> messageBeanList;
-    public MyListViewAdapter(Context context, List<MessageBean> messageItemBeanList) {
+    List<Item> messageBeanList;
+    public MyListViewAdapter(Context context, List<Item> messageItemBeanList) {
         this.context = context;
         this.messageBeanList = messageItemBeanList;
         mInflater=LayoutInflater.from(context);
@@ -52,7 +52,7 @@ public class MyListViewAdapter extends BaseAdapter {
         {
             viewHolder= (ViewHolder) convertView.getTag();
         }
-        MessageBean bean=messageBeanList.get(i);
+        Item bean=messageBeanList.get(i);
         viewHolder.titleTV.setText(bean.getTitle());
         return convertView;
     }

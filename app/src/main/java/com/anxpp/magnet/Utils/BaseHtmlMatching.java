@@ -12,13 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.anxpp.magnet.Beans.Item;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import java.net.URLEncoder;
 import java.util.List;
 
 
-public class HtmlMatching extends AsyncTask<String,Integer,String > {
+public class BaseHtmlMatching extends AsyncTask<String,Integer,String > {
 
     private ProgressDialog progressDialog;
     private Context context;
@@ -26,17 +30,15 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     private ListView listView;
     private List<Item> beanList;
     private String addr="";
-    private String searchKey="";
     private MatchingListener matchingListener;
 
-    public HtmlMatching(Context context, ProgressDialog progressDialog, MyListViewAdapter myListViewAdapter, ListView listView,
-                        List<Item> beanList, String addr, String searchKey, MatchingListener matchingListener){
+    public BaseHtmlMatching(Context context, ProgressDialog progressDialog, MyListViewAdapter myListViewAdapter, ListView listView,
+                            List<Item> beanList, String addr, MatchingListener matchingListener){
         this.context = context;
         this.progressDialog = progressDialog;
         this.myListViewAdapter = myListViewAdapter;
         this.listView = listView;
         this.beanList = beanList;
-        this.searchKey = searchKey;
         this.addr = addr;
         this.matchingListener = matchingListener;
     }
@@ -49,8 +51,15 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     @Override
     protected String doInBackground(String... params) {
         try {
+            Log.e("doInBackground-addr",addr);
             String html;
-            html = NetUtils.getHtml(addr + java.net.URLEncoder.encode(searchKey,"UTF-8"));
+            addr = addr.replace("/","qwesa");
+            addr = addr.replace(":","poiop");
+            addr = URLEncoder.encode(addr,"UTF-8");
+            addr = addr.replace("qwesa","/");
+            addr = addr.replace("poiop",":");
+            Log.e("doInBackground-addr",addr);
+            html = NetUtils.getHtml(addr);
             return html;
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,6 +87,7 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
     }
 
     private void getData(String s) {
+        Log.e("getData-s",s);
         try {
             Item item = new Item();
             matchingListener.setItem(item);
@@ -105,6 +115,7 @@ public class HtmlMatching extends AsyncTask<String,Integer,String > {
         catch (Exception e){
             Toast.makeText(context, "网络超时，请更换搜索源", Toast.LENGTH_SHORT).show();
             Log.e("getData",e.getMessage());
+            e.printStackTrace();
         }
     }
     public interface MatchingListener{
