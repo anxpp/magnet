@@ -55,9 +55,11 @@ public class BaseHtmlMatching extends AsyncTask<String,Integer,String > {
             String html;
             addr = addr.replace("/","qwesa");
             addr = addr.replace(":","poiop");
+            addr = addr.replace("-","pdlgj");
             addr = URLEncoder.encode(addr,"UTF-8");
             addr = addr.replace("qwesa","/");
             addr = addr.replace("poiop",":");
+            addr = addr.replace("pdlgj","-");
             Log.e("doInBackground-addr",addr);
             html = NetUtils.getHtml(addr);
             return html;

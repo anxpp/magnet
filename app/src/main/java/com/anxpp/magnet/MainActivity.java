@@ -41,32 +41,20 @@ public class MainActivity extends AppCompatActivity {
                     switch (selectedRadio.getId())
                     {
                         case R.id.radio_btn_ssbc:
-                            jumpClass = ResultActivity.class;
-                            MagnetInfo magnetInfo = new MagnetInfo();
-                            Item item = new Item();
-                            item.setTitle("div.search-item>div.item-title>h3>a");
-                            item.setLink("div.search-item>div.item-title>h3>a");
-                            magnetInfo.setUrl("http://www.shousibaocai.cc/search/"+searchEt.getText().toString());
-                            magnetInfo.setItem(item);
-                            Intent intent = new Intent(MainActivity.this, jumpClass);
+                            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                             intent.putExtra("title","手撕包菜");
-                            intent.putExtra("info", new String[]{magnetInfo.getUrl(),item.getTitle(),item.getLink()});
+                            intent.putExtra("info", new String[]{"http://www.shousibaocai.cc/search/"+searchEt.getText().toString()
+                                    ,"div.search-item>div.item-title>h3>a","div.search-item>div.item-title>h3>a"});
                             startActivity(intent);
                             return;
                         case R.id.radio_btn_bread:
                             jumpClass=BreadActivity.class;
                             break;
                         case R.id.radio_btn_btIsland:
-                            jumpClass = ResultActivity.class;
-                            magnetInfo = new MagnetInfo();
-                            item = new Item();
-                            item.setTitle("div.search-item>div.item-title>h3>a");
-                            item.setLink("div.search-item>div.item-title>h3>a");
-                            magnetInfo.setUrl("http://www.shousibaocai.cc/search/"+searchEt.getText().toString());
-                            magnetInfo.setItem(item);
-                            intent = new Intent(MainActivity.this, jumpClass);
+                            intent = new Intent(MainActivity.this, ResultActivity.class);
                             intent.putExtra("title","BT岛");
-                            intent.putExtra("info", new String[]{magnetInfo.getUrl(),item.getTitle(),item.getLink()});
+                            intent.putExtra("info", new String[]{"http://www.btdao.xyz/list/"+searchEt.getText().toString()
+                                    +"-s1d-1.html","li>h3.T1>a","li>h3.T1>a"});
                             startActivity(intent);
                             return;
                     }
